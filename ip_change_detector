@@ -1,0 +1,59 @@
+#!/bin/bash
+
+NAME=ip_change_detector
+VERSION=1.0
+
+. ./icd.conf
+
+CID_PATH=/var/$NAME/
+OLD_PATH=$PREFIX$CID_PATH/old_address
+TMP_PATH=$PREFIX$CID_PATH/tmp_address
+LOG_PATH=$PREFIX$CID_PATH/$NAME.log
+
+function log {
+	echo "$(date +%d-%m-%y) $(date +%H:%M) $1" >> $LOG_PATH
+}
+
+function log_and_mail {
+	echo "$(date +%d-%m-%y) $(date +%H:%M) $1" >> $LOG_PATH
+	echo $1 | mail -s $TITLE -t $MAIL
+}
+
+
+mkdir -p $PREFIX$CID_PATH
+
+
+if [ ! -f $OLD_PATH ]
+then
+	log "Create $OLD_PATH"
+	echo "0.0.0.0" >  $OLD_PATH
+fi
+
+if [ ! -f $TMP_PATH ]
+then
+	log "Create $TMP_PATH"
+	echo "0.0.0.0" >  $TMP_PATH
+fi
+
+
+WGET_LOG=$(wget $URL -O $TMP_PATH 2>/dev/null)
+if [ $? -ne 0 ]
+then
+	log_and_mail "wget failed: $WGET_LOG"
+fi
+
+ADDRESS_TMP=$(cat $TMP_PATH)
+ADDRESS_OLD=$(cat $OLD_PATH)
+
+
+if [ "$ADDRESS_TMP" != "$ADDRESS_OLD" ]
+then
+	log_and_mail "detected: $ADDRESS_TMP"
+	cp $TMP_PATH $OLD_PATH
+else
+	log "no change $ADDRESS_TMP"
+fi
+
+
+
+
