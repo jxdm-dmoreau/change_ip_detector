@@ -16,7 +16,7 @@ function log {
 
 function log_and_mail {
 	echo "$(date +%d-%m-%y) $(date +%H:%M) $1" >> $LOG_PATH
-	echo $1 | mail -s $TITLE -t $MAIL
+	echo $1 | mail -s "$TITLE" -t $MAIL
 }
 
 
