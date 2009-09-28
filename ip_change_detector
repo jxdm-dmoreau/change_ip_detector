@@ -2,6 +2,7 @@
 
 ###############################################################################
 MAIL="cmoidavid@gmail.com,jxing33@gmail.com"
+#MAIL="cmoidavid@gmail.com"
 URL=http://www.kamikase.info/tools/adresse.php
 TITLE="Asrock ION 330"
 PREFIX="/home/dmoreau/src/change_ip_detector/"
@@ -52,7 +53,7 @@ fi
 WGET_LOG=$(wget $URL -O $TMP_PATH 2>/dev/null)
 if [ $? -ne 0 ]
 then
-	log_and_mail "wget failed: $WGET_LOG"
+	log "wget failed: $WGET_LOG"
 	exit 1
 fi
 
