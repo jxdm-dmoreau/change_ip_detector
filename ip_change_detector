@@ -2,8 +2,7 @@
 
 ###############################################################################
 MAIL="cmoidavid@gmail.com,jxing33@gmail.com"
-#MAIL="cmoidavid@gmail.com"
-URL=http://www.kamikase.info/tools/adresse.php
+URL=http://www.whatismyip.com/automation/n09230945.asp
 TITLE="Asrock ION 330"
 PREFIX="/home/dmoreau/src/change_ip_detector/"
 ###############################################################################
